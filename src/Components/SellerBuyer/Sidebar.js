@@ -1,10 +1,7 @@
 import React from "react";
 import { AiFillQuestionCircle } from "react-icons/ai";
-import { CgProfile } from "react-icons/cg";
 import { GiTeacher } from "react-icons/gi";
-import { ImMail } from "react-icons/im";
-import { RiDashboardFill, RiLogoutCircleLine } from "react-icons/ri";
-import { MdPassword, MdSettingsAccessibility } from "react-icons/md";
+import { RiDashboardFill } from "react-icons/ri";
 import { Link } from "react-router-dom";
 const links = [
   {
@@ -20,7 +17,7 @@ const links = [
       {
         name: "My Orders",
         icon: <AiFillQuestionCircle />,
-        link: "/user/teacher/qahub",
+        link: "/admin/orders",
       },
       // { name: "Discussion", icon: <GiDiscussion /> },
     ],
@@ -52,7 +49,7 @@ const Sidebar = ({ showSidebar, selected, setselected }) => {
                       onClick={() => setselected(link.name)}
                     >
                       <span className="text-xl">{link.icon}</span>
-                      <h1 className="capitalize">{link.name}</h1>
+                      <h1 className="capitalize text-[1em]">{link.name}</h1>
                     </div>
                   </div>
                 </Link>

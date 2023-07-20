@@ -20,6 +20,8 @@ import SellerBuyerDashboard from "./Pages/SellerBuyer/dashboard";
 import AllProducts from "./Pages/SellerBuyer/AllProducts";
 import AddProduct from "./Pages/SellerBuyer/AddProduct";
 import ProductDetailPage from "./Components/ProductDetaiPage";
+import Bookings from "./Pages/SellerBuyer/Orders";
+import EditProduct from "./Pages/SellerBuyer/EditProduct";
 
 const router = createBrowserRouter([
   {
@@ -75,9 +77,14 @@ const router = createBrowserRouter([
     path: "/admin/products/add-new",
     element: <AddProduct />,
   },
+
   {
     path: "/plant-store/:id",
     element: <ProductDetailPage />,
+  },
+  {
+    path: "/admin/orders",
+    element: <Bookings />,
   },
 ]);
 const root = ReactDOM.createRoot(document.getElementById("root"));

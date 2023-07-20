@@ -1,4 +1,4 @@
-import { CircularProgress } from "@mui/material";
+import { Backdrop, CircularProgress } from "@mui/material";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
@@ -25,10 +25,10 @@ const ProductDetailPage = () => {
       setPaymentLoading(true);
       axios
         .post(
-          `${process.env.REACT_APP_BACKEND_URL}/order/placeorder`,
+          `${process.env.REACT_APP_BACKEND_URL}/payment`,
           {
             tokenId: StripeToken?.id,
-            amount: Product?.target,
+            amount: Product?.Price,
             ProductId: Product?._id,
           },
           { headers: { token: token } }
@@ -87,7 +87,7 @@ const ProductDetailPage = () => {
         toast.error(
           err.response.data.error
             ? err.response.data.error
-            : "Something Went Wrong in Fetching Products! Try Again",
+            : "Something Went Wrong in Placing Order! Try Again",
           {
             position: "top-right",
             autoClose: 3000,
@@ -125,47 +125,60 @@ const ProductDetailPage = () => {
           <p>Loading..</p>{" "}
         </div>
       ) : (
-        <div className="container mx-auto mt-8">
-          <div className="flex flex-wrap items-center justify-center">
-            <div className="w-full md:w-1/2">
-              <img
-                src={
-                  Product?.Image
-                    ? `${
-                        process.env.REACT_APP_BACKEND_URL + "/" + Product.Image
-                      }`
-                    : "product1.png"
-                }
-                alt={product.name}
-                className="w-full h-auto"
-              />
+        <>
+          <Backdrop
+            sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+            open={PaymentLoading}
+          >
+            <div className="flex items-center justify-center gap-3">
+              <CircularProgress color="inherit" />{" "}
+              <p>Making Payment! Please Wait</p>
             </div>
-            <div className="w-full md:w-1/2 md:pl-8 mt-4 md:mt-0">
-              <h2 className="text-2xl font-bold mb-4">{Product?.Title}</h2>
-              <p className="text-lg mb-4">{Product?.Description}</p>
-              <p className="text-lg mb-4">Rs{Product?.Price}</p>
+          </Backdrop>
+          <div className="container mx-auto mt-8">
+            <div className="flex flex-wrap items-center justify-center">
+              <div className="w-full md:w-1/2">
+                <img
+                  src={
+                    Product?.Image
+                      ? `${
+                          process.env.REACT_APP_BACKEND_URL +
+                          "/" +
+                          Product.Image
+                        }`
+                      : "product1.png"
+                  }
+                  alt={product.name}
+                  className="w-full h-auto"
+                />
+              </div>
+              <div className="w-full md:w-1/2 md:pl-8 mt-4 md:mt-0">
+                <h2 className="text-2xl font-bold mb-4">{Product?.Title}</h2>
+                <p className="text-lg mb-4">{Product?.Description}</p>
+                <p className="text-lg mb-4">Rs{Product?.Price}</p>
 
-              <StripeCheckout
-                name="GREEN VALLEY PAYMENTS"
-                image="/assets/chainraise_logo_black_text.jpeg"
-                billingAddress
-                shippingAddress
-                description={`Your Total is Rs. ${Product?.Price}`}
-                amount={Product?.Price}
-                token={onToken}
-                stripeKey={stripeKey}
-                className="cursor-pointer hidden"
-              >
-                <button
-                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                  onClick={handleBuyNow}
+                <StripeCheckout
+                  name="GREEN VALLEY PAYMENTS"
+                  image="/assets/chainraise_logo_black_text.jpeg"
+                  billingAddress
+                  shippingAddress
+                  description={`Your Total is Rs. ${Product?.Price}`}
+                  amount={Product?.Price}
+                  token={onToken}
+                  stripeKey={stripeKey}
+                  className="cursor-pointer hidden"
                 >
-                  Buy Now
-                </button>
-              </StripeCheckout>
+                  <button
+                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                    onClick={handleBuyNow}
+                  >
+                    Buy Now
+                  </button>
+                </StripeCheckout>
+              </div>
             </div>
           </div>
-        </div>
+        </>
       )}
     </div>
   );

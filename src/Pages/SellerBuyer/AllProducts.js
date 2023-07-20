@@ -63,11 +63,11 @@ const AllProducts = () => {
       });
   };
 
-  const DeleteTution = async () => {
+  const DeleteProduct = async (product) => {
     setdeleteLoading(true);
     await axios
       .post(
-        `${process.env.REACT_APP_BACKEND_URL}/tutions/deleteTution/${SelectedTution._id}`,
+        `${process.env.REACT_APP_BACKEND_URL}/products/delete/${product?._id}`,
         {},
         { headers: { token: token } }
       )
@@ -84,7 +84,7 @@ const AllProducts = () => {
           progress: undefined,
           theme: "light",
         });
-        handleCloseConfirmModal();
+        // handleCloseConfirmModal();
         FetchProducts();
       })
       .catch((error) => {
@@ -128,7 +128,7 @@ const AllProducts = () => {
           </Link>
         </div>
 
-        {openConfirmModal && (
+        {/* {openConfirmModal && (
           <Dialog
             open={openConfirmModal}
             onClose={handleCloseConfirmModal}
@@ -174,7 +174,7 @@ const AllProducts = () => {
               </DialogActions>
             </div>
           </Dialog>
-        )}
+        )} */}
 
         {loading ? (
           <div className="min-h-[100px] w-full flex space-x-2 items-center justify-center">
@@ -226,25 +226,18 @@ const AllProducts = () => {
                       </div>
 
                       <div className="flex items-center space-x-2">
-                        <a
-                          href={`/tutions/${elem._id}`}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="flex-1"
-                        >
+                        <Link to={`/plant-store/${elem?._id}`}>
                           <Button className="flex-1 bg-blue-500 shadow-none hover:shadow-none py-2 font-semibold rounded-md flex items-center justify-center hover:bg-main_bg_color transition-all">
                             <BiEditAlt className="mr-1" /> View
                           </Button>
-                        </a>
-                        <Button className="flex-1 bg-blue-500 shadow-none hover:shadow-none py-2 font-semibold rounded-md flex items-center justify-center hover:bg-main_bg_color transition-all">
-                          <BiEditAlt className="mr-1" /> Edit
-                        </Button>
+                        </Link>
+
                         <Button
+                          disabled={deleteLoading ? true : false}
                           onClick={() => {
-                            setSelectedTution(elem);
-                            handleOpenConfirmModal();
+                            DeleteProduct(elem);
                           }}
-                          className=" flex-1 bg-transparent border-2 border-red-500 text-red-500 shadow-none hover:shadow-none py-[7px] font-semibold rounded-md flex items-center justify-center hover:text-white hover:bg-red-500 transition-all"
+                          className=" flex-1 bg-transparent border-2 border-red-500 text-red-500 shadow-none hover:shadow-none py-[7px] font-semibold rounded-md flex items-center justify-center hover:text-white hover:bg-red-500 transition-all disabled:cursor-not-allowed disabled:opacity-50"
                         >
                           <MdDeleteOutline className="mr-1" /> Delete
                         </Button>
