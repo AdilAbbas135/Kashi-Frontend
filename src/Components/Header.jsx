@@ -87,7 +87,7 @@ export default function Header() {
       <div className="max-w-md mx-auto md:max-w-[450px]  bg-white bg-opacity-50 backdrop-filter backdrop-blur-sm mt-10 md:mt-48 flex justify-center items-center flex-col sm:max-w-full sm:h-96">
         <h1 className="text-6xl  font-medium text-green-900">Green Valley</h1>
         <p className="font-medium  text-black text-xl">
-          “Flower will not grow if the stem doesn't allow.”
+          “Flower will not grow if the stem doesn't allow..”
         </p>
         <button className="text-[18px] bg-green-600 text-white p-2 font-medium mt-3">
           Explore Now
