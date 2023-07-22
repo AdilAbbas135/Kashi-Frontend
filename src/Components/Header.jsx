@@ -50,17 +50,21 @@ export default function Header() {
                 Plant Store
               </li>
             </Link>
-            <Link to="disease">
+            <a href="http://127.0.0.1:5000/">
               <li className="py-1 px-2 hover:bg-green-900 hover:rounded hover:text-white duration-500">
                 Disease Detection
               </li>
-            </Link>
+            </a>
 
-            <Link to="live-chat">
+            <a
+              href="https://wa.me/03436959904"
+              target="_blank"
+              rel="noreferrer"
+            >
               <li className="py-1 px-2 hover:bg-green-900 hover:rounded hover:text-white duration-500">
                 Chat with Expert
               </li>
-            </Link>
+            </a>
 
             {token ? (
               <Link to={"/admin"}>
